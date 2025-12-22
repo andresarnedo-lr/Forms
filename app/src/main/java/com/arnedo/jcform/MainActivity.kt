@@ -20,8 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JCFormTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    MainView(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -30,18 +29,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
+
+@Preview(showSystemUi = true)
 @Composable
-fun GreetingPreview() {
+private fun LocalPreview() {
     JCFormTheme {
-        Greeting("Android")
+        MainPreview()
     }
 }
