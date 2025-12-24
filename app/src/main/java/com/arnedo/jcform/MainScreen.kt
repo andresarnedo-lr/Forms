@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,8 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.arnedo.jcform.ui.components.FormTextField
 import com.arnedo.jcform.ui.theme.JCFormTheme
 import com.arnedo.jcform.ui.theme.Typography
 
@@ -39,6 +43,7 @@ fun MainPreview() {
 @Composable
 fun MainView(modifier: Modifier) {
     var nameValue by remember { mutableStateOf("") }
+    var surnameValue by remember { mutableStateOf("") }
 
 
     Box(modifier.fillMaxWidth()) {
@@ -47,27 +52,25 @@ fun MainView(modifier: Modifier) {
                 stringResource(R.string.form_title),
                 style = Typography.titleLarge
             )
+            FormTextField(
+                labelRes = R.string.hint_name,
+                maxLengthRes = R.integer.name_max_length
+            )
+
+            FormTextField(labelRes = R.string.hint_surname)
         }
-        OutlinedTextField(
-            value = nameValue,
-            onValueChange = { nameValue = it},
-            modifier = Modifier.fillMaxWidth(),
-            label =  {
-                Text(stringResource(R.string.hint_name))
-            },
-            leadingIcon = {
-                Icon(Icons.Default.Person, contentDescription = null)
-            })
-            }
+    }
 
 
-                    Box (Modifier
-                        .fillMaxSize()
-                        .background(colorResource(R.color.progress_background))
-                        .clickable {},
-            contentAlignment = Alignment.Center
-        ) {
+    if(false){
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(colorResource(R.color.progress_background))
+                .clickable {},
+            contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
-
     }
+
+}
