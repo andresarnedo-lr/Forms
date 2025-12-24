@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.arnedo.jcform.ui.components.FormTextField
@@ -44,6 +46,7 @@ fun MainPreview() {
 fun MainView(modifier: Modifier) {
     var nameValue by remember { mutableStateOf("") }
     var surnameValue by remember { mutableStateOf("") }
+    var heightValue by remember {mutableStateOf("")}
 
 
     Box(modifier.fillMaxWidth()) {
@@ -52,12 +55,34 @@ fun MainView(modifier: Modifier) {
                 stringResource(R.string.form_title),
                 style = Typography.titleLarge
             )
+            //Name
             FormTextField(
                 labelRes = R.string.hint_name,
-                maxLengthRes = R.integer.name_max_length
+                iconRes = R.drawable.ic_person,
+                maxLengthRes = R.integer.name_max_length,
+                onValueChange = {nameValue = it}
             )
+            //Surname
+            FormTextField(labelRes = R.string.hint_surname,
+                iconRes = R.drawable.ic_person,
+                onValueChange = {surnameValue = it})
 
-            FormTextField(labelRes = R.string.hint_surname)
+            //Height
+            FormTextField(labelRes = R.string.hint_height,
+                iconRes = R.drawable.ic_height,
+                onValueChange = {heightValue = it})
+
+            //Save
+            Button(onClick = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimensionResource(R.dimen.common_padding_default))){
+                Icon(painterResource(R.drawable.ic_check), contentDescription = null)
+                Text(stringResource(R.string.btn_register))
+
+            }
+
+
         }
     }
 
