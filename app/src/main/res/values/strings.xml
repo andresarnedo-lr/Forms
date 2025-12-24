@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">JC Form</string>
     <string name="form_title">Registro de Usuario</string>
+
     <string name="hint_name">Nombre</string>
+    <string name="hint_surname">Apellidos</string>
+
+
+    <string name="supporting_required">Obligatorio</string>
 </resources>
