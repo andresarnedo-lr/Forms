@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -17,6 +19,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.arnedo.jcform.R
 import com.arnedo.jcform.ui.theme.JCFormTheme
@@ -39,13 +43,14 @@ fun FormTextField(labelRes : Int,
                   iconRes : Int,
                   maxLengthRes : Int? = null,
                   minValue : Int = 0,
+                  errorRes : Int = R.string.supporting_required,
+                  keyboardOptions: KeyboardOptions? = null,
                   onValueChange : (String) -> Unit) {
 
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
     val maxLength = if (maxLengthRes == null) null else integerResource(maxLengthRes)
-
 
     OutlinedTextField(
         value = textValue,
@@ -74,10 +79,18 @@ fun FormTextField(labelRes : Int,
         leadingIcon = {
             Icon(painterResource(iconRes), contentDescription = null)
         },
+        keyboardOptions = KeyboardOptions(
+            capitalization = keyboardOptions?.capitalization ?: KeyboardCapitalization.Sentences,
+            keyboardType = keyboardOptions?.keyboardType ?: KeyboardType.Text
+        ),
+
+
         supportingText = {
             Row {
-                Text(stringResource(R.string.supporting_required))
+                Text(if (isError) stringResource(errorRes) else stringResource(R.string.supporting_required))
+
                 Spacer(Modifier.weight(1f))
+
                 if(maxLength != null && minValue == 0)
                     Text("${textValue.length}/$maxLength")
             }

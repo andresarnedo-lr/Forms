@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -28,6 +29,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.arnedo.jcform.ui.components.FormTextField
 import com.arnedo.jcform.ui.theme.JCFormTheme
@@ -72,6 +74,8 @@ fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
                 iconRes = R.drawable.ic_height,
                 maxLengthRes = integerResource(R.integer.height_max_length),
                 minValue = integerResource(R.integer.height_min_value),
+                errorRes = R.string.error_min_height_valid,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 onValueChange = {heightValue = it})
 
             //Save

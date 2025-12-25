@@ -8,5 +8,8 @@
 
 
     <string name="supporting_required">Obligatorio</string>
+    
+    <string name="error_min_height_valid">Estatura minima: 50cm</string>
+    
     <string name="btn_register">Registrar</string>
 </resources>
