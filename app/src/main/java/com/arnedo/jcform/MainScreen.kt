@@ -37,13 +37,13 @@ import com.arnedo.jcform.ui.theme.Typography
 @Composable
 fun MainPreview() {
     JCFormTheme {
-        MainView(Modifier.padding(top = dimensionResource(R.dimen.common_padding_middle)))
+        MainView(Modifier.padding(top = dimensionResource(R.dimen.common_padding_middle)),{})
     }
 }
 
 
 @Composable
-fun MainView(modifier: Modifier) {
+fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
     var nameValue by remember { mutableStateOf("") }
     var surnameValue by remember { mutableStateOf("") }
     var heightValue by remember {mutableStateOf("")}
@@ -73,7 +73,10 @@ fun MainView(modifier: Modifier) {
                 onValueChange = {heightValue = it})
 
             //Save
-            Button(onClick = {},
+            Button(onClick = {
+                val user = User(nameValue, surnameValue, heightValue.toInt())
+                onSave(user)
+            },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = dimensionResource(R.dimen.common_padding_default))){
