@@ -38,13 +38,13 @@ private fun FormTextFieldPreview() {
 fun FormTextField(labelRes : Int,
                   iconRes : Int,
                   maxLengthRes : Int? = null,
+                  minValue : Int = 0,
                   onValueChange : (String) -> Unit) {
 
     var textValue by remember { mutableStateOf("") }
+    var isError by remember { mutableStateOf(false) }
+
     val maxLength = if (maxLengthRes == null) null else integerResource(maxLengthRes)
-
-
-
 
 
     OutlinedTextField(
@@ -56,9 +56,15 @@ fun FormTextField(labelRes : Int,
                 if (it.length <= maxLength)
                     textValue = it
             }
+            isError = it.trim().isEmpty()
+
+            if(minValue > 0){
+                isError = (textValue.toIntOrNull() ?: 0) < minValue
+            }
 
             onValueChange(textValue)
         },
+        isError = isError,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = dimensionResource(R.dimen.common_padding_min)),
@@ -72,7 +78,7 @@ fun FormTextField(labelRes : Int,
             Row {
                 Text(stringResource(R.string.supporting_required))
                 Spacer(Modifier.weight(1f))
-                if(maxLength != null)
+                if(maxLength != null && minValue == 0)
                     Text("${textValue.length}/$maxLength")
             }
         })

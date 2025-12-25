@@ -70,6 +70,8 @@ fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
             //Height
             FormTextField(labelRes = R.string.hint_height,
                 iconRes = R.drawable.ic_height,
+                maxLengthRes = integerResource(R.integer.height_max_length),
+                minValue = integerResource(R.integer.height_min_value),
                 onValueChange = {heightValue = it})
 
             //Save
