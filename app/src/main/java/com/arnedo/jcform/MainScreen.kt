@@ -29,6 +29,8 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.arnedo.jcform.ui.components.FormTextField
@@ -62,11 +64,13 @@ fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
                 labelRes = R.string.hint_name,
                 iconRes = R.drawable.ic_person,
                 maxLengthRes = R.integer.name_max_length,
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                 onValueChange = {nameValue = it}
             )
             //Surname
             FormTextField(labelRes = R.string.hint_surname,
                 iconRes = R.drawable.ic_person,
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                 onValueChange = {surnameValue = it})
 
             //Height
@@ -75,7 +79,8 @@ fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
                 maxLengthRes = integerResource(R.integer.height_max_length),
                 minValue = integerResource(R.integer.height_min_value),
                 errorRes = R.string.error_min_height_valid,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done),
                 onValueChange = {heightValue = it})
 
             //Save

@@ -19,6 +19,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -81,7 +82,9 @@ fun FormTextField(labelRes : Int,
         },
         keyboardOptions = KeyboardOptions(
             capitalization = keyboardOptions?.capitalization ?: KeyboardCapitalization.Sentences,
-            keyboardType = keyboardOptions?.keyboardType ?: KeyboardType.Text
+            keyboardType = keyboardOptions?.keyboardType ?: KeyboardType.Text,
+            imeAction = if(keyboardOptions == null || keyboardOptions.imeAction == ImeAction.Default)ImeAction.Next
+            else keyboardOptions.imeAction
         ),
 
 
