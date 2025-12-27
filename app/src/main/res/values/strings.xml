@@ -12,4 +12,7 @@
     <string name="error_min_height_valid">Estatura minima: 50cm</string>
     
     <string name="btn_register">Registrar</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancelar">Cancelar</string>
+    <string name="dialog_title">Datos recolectados</string>
 </resources>
