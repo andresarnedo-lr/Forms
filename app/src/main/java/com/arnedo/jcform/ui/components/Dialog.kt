@@ -8,18 +8,21 @@ import androidx.compose.ui.res.stringResource
 import com.arnedo.jcform.R
 
 @Composable
-fun ArnDialogInfo(info: String, titleRes: Int, onDismissRequest: () -> Unit) {
+fun ArnDialogInfo(info: String,
+                  titleRes: Int,
+                  confirmRes : Int = R.string.dialog_ok,
+                  onDismissRequest: (Boolean) -> Unit) {
     AlertDialog(
-        onDismissRequest = { onDismissRequest() },
+        onDismissRequest = { onDismissRequest(false) },
         title = { Text(stringResource(titleRes)) },
         text = { Text(info) },
         confirmButton = {
-            TextButton(onClick = { onDismissRequest() }) {
-                Text(stringResource(R.string.dialog_ok))
+            TextButton(onClick = { onDismissRequest(true) }) {
+                Text(stringResource(confirmRes))
             }
         },
         dismissButton = {
-            TextButton(onClick = { onDismissRequest() }) {
+            TextButton(onClick = { onDismissRequest(false) }) {
                 Text(stringResource(R.string.dialog_cancelar))
             }
         }

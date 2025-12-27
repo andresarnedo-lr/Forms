@@ -26,12 +26,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             JCFormTheme {
                 var openDialog by remember { mutableStateOf(false) }
+                var cleanForm by remember { mutableStateOf(false) }
                 var userFilled : User? = null
 
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MainView(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        isClean = cleanForm,
+                        onCleaned = { cleanForm = false}
                     ){user ->
                         Log.i("CursosANT", "onCreate: $user")
                         userFilled = user
@@ -41,7 +44,9 @@ class MainActivity : ComponentActivity() {
                     if(openDialog) {
                         userFilled?.let { user ->
                             ArnDialogInfo(info = user.toString(),
-                                    titleRes = R.string.dialog_title){
+                                    titleRes = R.string.dialog_title,
+                                confirmRes = R.string.dialog_clean){ clean ->
+                                cleanForm = clean
                                 openDialog = false
                             }
                         }

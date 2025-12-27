@@ -41,16 +41,24 @@ import com.arnedo.jcform.ui.theme.Typography
 @Composable
 fun MainPreview() {
     JCFormTheme {
-        MainView(Modifier.padding(top = dimensionResource(R.dimen.common_padding_middle)),{})
+        MainView(Modifier.padding(top = dimensionResource(R.dimen.common_padding_middle)),false,{},{})
     }
 }
 
 
 @Composable
-fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
+fun MainView(modifier: Modifier,
+             isClean : Boolean = false,
+             onCleaned : () -> Unit ,
+             onSave : (User) -> Unit) {
     var nameValue by remember { mutableStateOf("") }
     var surnameValue by remember { mutableStateOf("") }
     var heightValue by remember {mutableStateOf("")}
+
+    if(isClean) {
+
+        onCleaned()
+    }
 
 
     Box(modifier.fillMaxWidth()) {
@@ -65,12 +73,14 @@ fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
                 iconRes = R.drawable.ic_person,
                 maxLengthRes = R.integer.name_max_length,
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                isClean = isClean,
                 onValueChange = {nameValue = it}
             )
             //Surname
             FormTextField(labelRes = R.string.hint_surname,
                 iconRes = R.drawable.ic_person,
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                isClean = isClean,
                 onValueChange = {surnameValue = it})
 
             //Height
@@ -81,6 +91,7 @@ fun MainView(modifier: Modifier, onSave : (User) -> Unit) {
                 errorRes = R.string.error_min_height_valid,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done),
+                isClean = isClean,
                 onValueChange = {heightValue = it})
 
             //Save

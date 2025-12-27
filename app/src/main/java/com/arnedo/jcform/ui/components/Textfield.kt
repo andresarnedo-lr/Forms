@@ -46,12 +46,17 @@ fun FormTextField(labelRes : Int,
                   minValue : Int = 0,
                   errorRes : Int = R.string.supporting_required,
                   keyboardOptions: KeyboardOptions? = null,
+                  isClean : Boolean = false,
                   onValueChange : (String) -> Unit) {
 
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
     val maxLength = if (maxLengthRes == null) null else integerResource(maxLengthRes)
+
+    if(isClean){
+        textValue = ""
+    }
 
     OutlinedTextField(
         value = textValue,
