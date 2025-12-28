@@ -1,30 +1,19 @@
 package com.arnedo.jcform
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
@@ -33,7 +22,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.arnedo.jcform.ui.components.DatePickerModal
 import com.arnedo.jcform.ui.components.FormTextField
+import com.arnedo.jcform.ui.components.TextFieldDate
 import com.arnedo.jcform.ui.theme.JCFormTheme
 import com.arnedo.jcform.ui.theme.Typography
 
@@ -41,7 +33,7 @@ import com.arnedo.jcform.ui.theme.Typography
 @Composable
 fun MainPreview() {
     JCFormTheme {
-        MainView(Modifier.padding(top = dimensionResource(R.dimen.common_padding_middle)),false,{},{})
+        MainView(Modifier.padding(top = 24.dp),false,{},{})
     }
 }
 
@@ -54,6 +46,8 @@ fun MainView(modifier: Modifier,
     var nameValue by remember { mutableStateOf("") }
     var surnameValue by remember { mutableStateOf("") }
     var heightValue by remember {mutableStateOf("")}
+    var showDatePicker by remember { mutableStateOf(false) }
+    var dateValue by remember { mutableStateOf<Long?>(null) }
 
     if(isClean) {
 
@@ -86,13 +80,23 @@ fun MainView(modifier: Modifier,
             //Height
             FormTextField(labelRes = R.string.hint_height,
                 iconRes = R.drawable.ic_height,
-                maxLengthRes = integerResource(R.integer.height_max_length),
+                maxLengthRes = R.integer.height_max_length,
                 minValue = integerResource(R.integer.height_min_value),
                 errorRes = R.string.error_min_height_valid,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done),
                 isClean = isClean,
                 onValueChange = {heightValue = it})
+
+            //BirthDate
+            TextFieldDate(
+                labelRes = R.string.hint_birthdate,
+                selectDate = dateValue){
+                showDatePicker = true
+            }
+            if(showDatePicker){
+                DatePickerModal(onDateSelected = {dateValue = it}, onDismiss = {showDatePicker = false})
+            }
 
             //Save
             Button(onClick = {
@@ -112,15 +116,15 @@ fun MainView(modifier: Modifier,
     }
 
 
-    if(false){
-        Box(
-            Modifier
-                .fillMaxSize()
-                .background(colorResource(R.color.progress_background))
-                .clickable {},
-            contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    }
+//    if(false){
+//        Box(
+//            Modifier
+//                .fillMaxSize()
+//                .background(colorResource(R.color.progress_background))
+//                .clickable {},
+//            contentAlignment = Alignment.Center) {
+//            CircularProgressIndicator()
+//        }
+//    }
 
 }
