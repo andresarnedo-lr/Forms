@@ -1,15 +1,18 @@
 package com.arnedo.jcform
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -18,7 +21,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
@@ -39,7 +44,7 @@ import com.arnedo.jcform.ui.theme.Typography
 @Composable
 fun MainPreview() {
     JCFormTheme {
-        MainView(Modifier.padding(top = 24.dp), false, {}, {})
+        MainView(Modifier.padding(top = 24.dp), false, {}){}
     }
 }
 
@@ -56,12 +61,15 @@ fun MainView(
     var heightValue by remember { mutableStateOf("") }
     var showDatePicker by remember { mutableStateOf(false) }
     var dateValue by remember { mutableStateOf<Long?>(null) }
+    var notesValue by remember { mutableStateOf("") }
+    var isAgree by remember { mutableStateOf(false) }
 
     val profiles = listOf("Estudiante", "Programador")
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(profiles[0]) }
 
     if (isClean) {
-
+        dateValue = null
+        onOptionSelected(profiles[0])
         onCleaned()
     }
 
@@ -88,8 +96,10 @@ fun MainView(
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                 isClean = isClean,
                 onValueChange = { surnameValue = it })
-            Row(
-                modifier.fillMaxWidth(),
+
+            Row(Modifier
+                .fillMaxWidth()
+                .padding(top = dimensionResource(R.dimen.common_padding_min)),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.common_padding_default))
             ) {
                 //Height
@@ -105,13 +115,12 @@ fun MainView(
                         imeAction = ImeAction.Done
                     ),
                     isClean = isClean,
+                    paddingTop = dimensionResource(R.dimen.common_padding_none),
                     onValueChange = { heightValue = it })
 
                 //BirthDate
                 TextFieldDate(
-                    modifier = Modifier
-                        .padding(top = dimensionResource(R.dimen.common_padding_min))
-                        .weight(60f),
+                    modifier = Modifier.weight(60f),
                     labelRes = R.string.hint_birthdate,
                     selectDate = dateValue
                 ) {
@@ -137,33 +146,63 @@ fun MainView(
                 profiles.forEach { text ->
                     Row(Modifier
                         .fillMaxWidth()
+                        .height(dimensionResource(R.dimen.rb_row_height))
                         .selectable(
                             selected = (text == selectedOption),
                             onClick = { onOptionSelected(text) },
                             role = Role.RadioButton
-                        )) {
+                        ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         RadioButton(
                             selected = (text == selectedOption),
                             onClick = null
                         )
-                        Text(text)
+                        Text(text,
+                            modifier = Modifier.padding(start = dimensionResource(R.dimen.common_padding_default)))
                     }
                 }
             }
 
+            //Notes
+            FormTextField(labelRes = R.string.hint_notes,
+                iconRes = R.drawable.ic_notes,
+                maxLengthRes = R.integer.note_max_length,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                singleLine = false,
+                isRequired = false,
+                isClean = isClean,
+                paddingTop = dimensionResource(R.dimen.common_padding_none),
+                onValueChange = { notesValue = it})
+
+            //Agree
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.checkbox_agree),
+                    modifier = Modifier.clickable{isAgree == !isAgree})
+                Checkbox(checked = isAgree,
+                    onCheckedChange = { isAgree = it }
+                )
+            }
+
+
             //Save
             Button(
                 onClick = {
-                    val user = User(nameValue, surnameValue, heightValue.toInt())
+                    val user = User(nameValue,
+                        surnameValue,
+                        heightValue.toInt(),
+                        dateValue ?: 0,
+                        selectedOption,
+                        notesValue)
                     onSave(user)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.common_padding_default))
+                    .padding(vertical = dimensionResource(R.dimen.common_padding_default)),
+                enabled = isAgree
             ) {
                 Icon(painterResource(R.drawable.ic_check), contentDescription = null)
                 Text(stringResource(R.string.btn_register))
-
             }
 
 

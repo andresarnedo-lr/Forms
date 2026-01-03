@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import com.arnedo.jcform.R
 import com.arnedo.jcform.convertMillisToDate
 
@@ -69,7 +70,10 @@ fun FormTextField(
     minValue: Int = 0,
     errorRes: Int = R.string.supporting_required,
     keyboardOptions: KeyboardOptions? = null,
+    singleLine : Boolean = true,
+    isRequired : Boolean = true,
     isClean: Boolean = false,
+    paddingTop : Dp = dimensionResource(R.dimen.common_padding_min),
     onValueChange: (String) -> Unit
 ) {
 
@@ -102,16 +106,17 @@ fun FormTextField(
             onValueChange(textValue)
         },
         isError = isError,
+        singleLine = singleLine,
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = dimensionResource(R.dimen.common_padding_min)),
+            .padding(top = paddingTop),
         label = {
             Text(stringResource(labelRes),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis)
         },
         leadingIcon = {
-            Icon(painterResource(iconRes), contentDescription = null)
+            Icon(painter = painterResource(iconRes), contentDescription = null)
         },
         keyboardOptions = KeyboardOptions(
             capitalization = keyboardOptions?.capitalization ?: KeyboardCapitalization.Sentences,
@@ -123,7 +128,10 @@ fun FormTextField(
 
         supportingText = {
             Row {
-                Text(if (isError) stringResource(errorRes) else stringResource(R.string.supporting_required))
+                if (isRequired){
+                    Text(if (isError) stringResource(errorRes)
+                    else stringResource(R.string.supporting_required))
+                }
 
                 Spacer(Modifier.weight(1f))
 
@@ -151,7 +159,7 @@ fun TextFieldDate(
                 overflow = TextOverflow.Ellipsis)
         },
         trailingIcon = {
-            painterResource(R.drawable.ic_calendar_today)
+            Icon(painterResource(R.drawable.ic_calendar_today), contentDescription = null)
         },
         modifier = modifier.pointerInput(selectDate){
                 awaitEachGesture {

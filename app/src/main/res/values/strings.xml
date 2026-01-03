@@ -18,5 +18,7 @@
     <string name="dialog_clean">Limpiar</string>
     <string name="hint_birthdate">Fecha de nacimiento</string>
     <string name="section_occupation">Ocupacion:</string>
+    <string name="hint_notes">Notas\n</string>
+    <string name="checkbox_agree">Acepto terminos y condiciones</string>
 
 </resources>
