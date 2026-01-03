@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.arnedo.jcform.R
 import com.arnedo.jcform.convertMillisToDate
@@ -38,6 +39,7 @@ import com.arnedo.jcform.ui.theme.JCFormTheme
 private fun FormTextFieldPreview() {
     JCFormTheme{
         FormTextField(
+            Modifier,
             labelRes = R.string.hint_name,
             iconRes = R.drawable.ic_height,
             maxLengthRes = R.integer.name_max_length
@@ -50,6 +52,7 @@ private fun FormTextFieldPreview() {
 fun TfDatePreview() {
     JCFormTheme {
         TextFieldDate(
+            Modifier,
             labelRes = R.string.hint_birthdate,
             selectDate = null
         ){}
@@ -59,6 +62,7 @@ fun TfDatePreview() {
 
 @Composable
 fun FormTextField(
+    modifier: Modifier = Modifier,
     labelRes: Int,
     iconRes: Int,
     maxLengthRes: Int? = null,
@@ -98,11 +102,13 @@ fun FormTextField(
             onValueChange(textValue)
         },
         isError = isError,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(top = dimensionResource(R.dimen.common_padding_min)),
         label = {
-            Text(stringResource(labelRes))
+            Text(stringResource(labelRes),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
         },
         leadingIcon = {
             Icon(painterResource(iconRes), contentDescription = null)
@@ -130,6 +136,7 @@ fun FormTextField(
 
 @Composable
 fun TextFieldDate(
+    modifier: Modifier,
     labelRes: Int,
     selectDate: Long? = null,
     onShowModal: () -> Unit
@@ -139,13 +146,14 @@ fun TextFieldDate(
         value = selectDate?.let { convertMillisToDate(it) } ?: "",
         onValueChange = {},
         label = {
-            Text(stringResource(labelRes))
+            Text(stringResource(labelRes),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
         },
         trailingIcon = {
             painterResource(R.drawable.ic_calendar_today)
         },
-        modifier = Modifier
-            .pointerInput(selectDate){
+        modifier = modifier.pointerInput(selectDate){
                 awaitEachGesture {
                     awaitFirstDown(pass = PointerEventPass.Initial)
                     val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
