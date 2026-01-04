@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
 
                     if(openDialog) {
                         userFilled?.let { user ->
-                            ArnDialogInfo(info = user.toString(),
+                            ArnDialogInfo(info = userFormatter(user),
                                     titleRes = R.string.dialog_title,
                                 confirmRes = R.string.dialog_clean){ clean ->
                                 cleanForm = clean

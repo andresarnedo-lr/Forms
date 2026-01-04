@@ -30,3 +30,14 @@ fun foundErrors(context : Context,
         return  null
     }
 }
+
+fun userFormatter(user : User) : String {
+    val result = StringBuilder()
+    result.appendLine("Nombre: ${user.name} ${user.surname}\n")
+    result.appendLine("Estatura: ${user.height} cm\n")
+    result.appendLine("Fecha de Nacimiento: ${convertMillisToDate(user.birthDate)}\n")
+    result.appendLine("Ocupacion: ${user.occupation}\n")
+    result.appendLine("Notas: ${user.notes}\n")
+
+    return result.toString()
+}

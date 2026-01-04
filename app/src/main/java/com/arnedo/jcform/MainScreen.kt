@@ -75,6 +75,7 @@ fun MainView(
     if (isClean) {
         dateValue = null
         onOptionSelected(profiles[0])
+        isAgree = false
         onCleaned()
     }
 
