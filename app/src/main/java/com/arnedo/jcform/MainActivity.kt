@@ -8,16 +8,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.arnedo.jcform.ui.components.ArnDialogInfo
 import com.arnedo.jcform.ui.theme.JCFormTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +30,29 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JCFormTheme {
+                val snackbarHostState = remember { SnackbarHostState() }
+                val scope = rememberCoroutineScope()
+
+
                 var openDialog by remember { mutableStateOf(false) }
                 var cleanForm by remember { mutableStateOf(false) }
                 var userFilled : User? = null
 
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                    snackbarHost = { SnackbarHost(snackbarHostState) }) { innerPadding ->
                     MainView(
                         modifier = Modifier.padding(innerPadding),
                         isClean = cleanForm,
+                        onError = {error ->
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = error,
+                                    actionLabel = getString(R.string.dialog_ok),
+                                    duration = SnackbarDuration.Long
+                                )
+                            }
+                        },
                         onCleaned = { cleanForm = false}
                     ){user ->
                         Log.i("CursosANT", "onCreate: $user")

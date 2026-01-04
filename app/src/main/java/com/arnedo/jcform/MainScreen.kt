@@ -46,7 +46,7 @@ import com.arnedo.jcform.ui.theme.Typography
 @Composable
 fun MainPreview() {
     JCFormTheme {
-        MainView(Modifier.padding(top = 24.dp), false, {}){}
+        MainView(Modifier.padding(top = 24.dp), false, {},{}){}
     }
 }
 
@@ -56,6 +56,7 @@ fun MainView(
     modifier: Modifier,
     isClean: Boolean = false,
     onCleaned: () -> Unit,
+    onError : (String) -> Unit,
     onSave: (User) -> Unit
 ) {
     var nameValue by remember { mutableStateOf("") }
@@ -202,7 +203,8 @@ fun MainView(
                             notesValue)
                         onSave(user)
                     }else {
-                        Log.e("CursosANT", "MainView: $errors")
+//                        Log.e("CursosANT", "MainView: $errors")
+                        onError(errors)
                     }
 
                 },
