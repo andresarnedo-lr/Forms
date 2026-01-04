@@ -21,4 +21,6 @@
     <string name="hint_notes">Notas\n</string>
     <string name="checkbox_agree">Acepto terminos y condiciones</string>
 
+    <string name="form_invalid">Formulario incompleto, revise los campos requeridos</string>
+
 </resources>
