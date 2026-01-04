@@ -81,6 +81,23 @@ fun MainView(
 
     val isShowKeyboard = WindowInsets.isImeVisible
 
+    val saveFun = {
+        val errors = foundErrors(context, nameValue, surnameValue, heightValue)
+        if (errors == null) {
+            val user = User(
+                nameValue,
+                surnameValue,
+                heightValue.toInt(),
+                dateValue ?: 0,
+                selectedOption,
+                notesValue
+            )
+            onSave(user)
+        } else {
+//                        Log.e("CursosANT", "MainView: $errors")
+            onError(errors)
+        }
+    }
 
     if (isClean) {
         dateValue = null
@@ -101,22 +118,7 @@ fun MainView(
                 val saveAlpha = if (isShowKeyboard) 1f else 0f
                 Button(
                     onClick = {
-                        val errors = foundErrors(context, nameValue, surnameValue, heightValue)
-                        if (errors == null) {
-                            val user = User(
-                                nameValue,
-                                surnameValue,
-                                heightValue.toInt(),
-                                dateValue ?: 0,
-                                selectedOption,
-                                notesValue
-                            )
-                            onSave(user)
-                        } else {
-//                        Log.e("CursosANT", "MainView: $errors")
-                            onError(errors)
-                        }
-
+                        saveFun()
                     },
                     modifier = Modifier
                         .alpha(saveAlpha),
@@ -241,27 +243,14 @@ fun MainView(
 
 
                 //Save
+                val saveAlphaReversed = if (!isShowKeyboard) 1f else 0f
                 Button(
                     onClick = {
-                        val errors = foundErrors(context, nameValue, surnameValue, heightValue)
-                        if (errors == null) {
-                            val user = User(
-                                nameValue,
-                                surnameValue,
-                                heightValue.toInt(),
-                                dateValue ?: 0,
-                                selectedOption,
-                                notesValue
-                            )
-                            onSave(user)
-                        } else {
-//                        Log.e("CursosANT", "MainView: $errors")
-                            onError(errors)
-                        }
-
+                        saveFun()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
+                        .alpha(saveAlphaReversed)
                         .padding(vertical = dimensionResource(R.dimen.common_padding_default)),
                     enabled = isAgree
                 ) {
