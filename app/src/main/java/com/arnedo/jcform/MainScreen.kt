@@ -160,7 +160,8 @@ fun MainView(
                     labelRes = R.string.hint_name,
                     iconRes = R.drawable.ic_person,
                     maxLengthRes = R.integer.name_max_length,
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Next),
                     isClean = isClean,
                     onValueChange = { nameValue = it }
                 )
@@ -168,7 +169,8 @@ fun MainView(
                 FormTextField(
                     labelRes = R.string.hint_surname,
                     iconRes = R.drawable.ic_person,
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Next),
                     isClean = isClean,
                     onValueChange = { surnameValue = it })
 
