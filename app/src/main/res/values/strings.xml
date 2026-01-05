@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">JC Form</string>
+    <string name="form_title">Registro de Usuario</string>
+
+    <string name="hint_name">Nombre</string>
+    <string name="hint_surname">Apellidos</string>
+    <string name="hint_height">Estatura</string>
+
+
+    <string name="supporting_required">Obligatorio</string>
+    
+    <string name="error_min_height_valid">Estatura minima: 50cm</string>
+    
+    <string name="btn_register">Registrar</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancelar">Cancelar</string>
+    <string name="dialog_title">Datos recolectados</string>
+    <string name="dialog_clean">Limpiar</string>
+    <string name="hint_birthdate">Fecha de nacimiento</string>
+    <string name="section_occupation">Ocupacion:</string>
+    <string name="hint_notes">Notas\n</string>
+    <string name="checkbox_agree">Acepto terminos y condiciones</string>
+
+    <string name="form_invalid">Formulario incompleto, revise los campos requeridos</string>
+
 </resources>
