@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="profiles">
+        <item>@string/profile_student</item>
+        <item>@string/profile_developer</item>
+    </string-array>
+</resources>

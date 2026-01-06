@@ -42,6 +42,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -86,7 +87,8 @@ fun MainView(
     var isAgree by remember { mutableStateOf(false) }
     var inProgress by remember { mutableStateOf(false) }
 
-    val profiles = listOf("Estudiante", "Programador")
+//    val profiles = listOf("Estudiante", "Programador")
+    val profiles = stringArrayResource(R.array.profiles)
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(profiles[0]) }
 
 
